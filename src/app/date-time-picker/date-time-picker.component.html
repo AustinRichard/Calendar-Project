@@ -1,0 +1,29 @@
+<div>
+  <strong>Pick a Date & Time</strong>
+  <div>
+    <mat-form-field>
+      <mat-label>Pick a date</mat-label>
+      <input matInput [matDatepicker]="dateSelect" disabled (dateInput)="showTimeSlots($event)" [matDatepickerFilter]="inputFilter">
+      <mat-datepicker-toggle matSuffix [for]="dateSelect" (click)="loadAvailableDates()"></mat-datepicker-toggle>
+      <mat-datepicker #dateSelect disabled="false"></mat-datepicker>
+    </mat-form-field>
+
+    <div>
+      <p *ngIf="!displayAppointment">Date not selected</p>
+      <div *ngIf="displayAppointment">
+        <p>Time slots for {{selectedDate| date : "dd-MMMM-yyyy" }}</p>
+      </div>
+      <ul>
+        <div *ngFor="let slot of availableTimeSlots">
+          <mat-radio-button *ngIf="displayAppointment" (click)="selectTimeslot(slot)">
+            {{slot}}
+          </mat-radio-button>
+        </div>
+      </ul>
+    </div>
+
+    <div *ngIf="selectedTime">
+      <div><strong>Appointment Date and Time:</strong></div>
+      <div>Date: {{selectedDate| date : "dd-MMMM-yyyy" }}</div>
+      <div>Time: {{selectedTime}}</div>
+    </div>
